@@ -8,10 +8,10 @@ using System.Text;
 
 namespace ShoppingCart.Data.Repositories
 {
-	class CartRepository : ICartsRepository
+	public class CartsRepository : ICartsRepository
 	{
 		ShoppingCartDbContext _context;
-		public CartRepository(ShoppingCartDbContext context)
+		public CartsRepository(ShoppingCartDbContext context)
 		{
 			_context = context;
 		}
@@ -23,24 +23,20 @@ namespace ShoppingCart.Data.Repositories
 			return c.Id;
 		}
 
-		public void DeleteFromcart(Cart c)
+		public void DeleteFromCart(Cart c)
 		{
-			throw new NotImplementedException();
+			_context.Carts.Remove(c);
+			_context.SaveChanges();
 		}
 
 		public IQueryable<Cart> GetCarts()
 		{
-			throw new NotImplementedException();
-		}
-
-		public Cart GetCart(Guid id)
-		{
-			throw new NotImplementedException();
+			return _context.Carts;
 		}
 
 		public Cart GetCart(int id)
 		{
-			throw new NotImplementedException();
+			return _context.Carts.SingleOrDefault(x => x.Id == id);
 		}
 		Guid ICartsRepository.AddToCart(Cart c)
 		{

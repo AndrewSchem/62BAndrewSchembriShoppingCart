@@ -65,9 +65,6 @@ namespace ShoppingCart.Application.Services
         {
             //AutoMapper
 
-
-           
-
             var myProduct = _productsRepo.GetProduct(id);
             var result = _mapper.Map<ProductViewModel>(myProduct);
             return result;

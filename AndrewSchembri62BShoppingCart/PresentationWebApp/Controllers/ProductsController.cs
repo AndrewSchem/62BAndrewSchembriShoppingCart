@@ -14,13 +14,15 @@ namespace PresentationWebApp.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsService _productsService;
+        private readonly ICartsService _cartsService;
         private readonly ICategoriesService _categoriesService;
         private IWebHostEnvironment _env;
         public ProductsController(IProductsService productsService, ICategoriesService categoriesService,
-             IWebHostEnvironment env )
+             ICartsService cartsService ,IWebHostEnvironment env )
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
+            _cartsService = cartsService;
             _env = env;
         }
 
@@ -117,8 +119,26 @@ namespace PresentationWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "User, Admin")]
+        public IActionResult AddToCart(Guid id)
+        //public IActionResult AddToCart(Guid id, string email)
+        {
+            try
+            {
+                if (id != null)
+                {
+                    _cartsService.AddToCart(_productsService.GetProduct(id), 1, "andrewschembri1@hotmail.com");
+                }
 
+                TempData["feedback"] = "Product was added successfully";
+            }
+            catch (Exception ex)
+            {
+                //log error
+                TempData["warning"] = "Product was not added!" + ex;
+            }
 
-
+            return RedirectToAction("Index");
+        }
     }
 }

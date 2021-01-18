@@ -8,7 +8,7 @@ namespace ShoppingCart.Application.ViewModels
 	{
 		public int Id { get; set; }
 
-		public String email { get; set; }
+		public String Email { get; set; }
 
 		public ProductViewModel Product { get; set; }
 
