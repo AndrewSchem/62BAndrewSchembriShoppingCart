@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
+
+
+@foreach (var p in Model)
+{
+    <div class="card card- bg-dark text-light h-50">
+        <img src="@p.ImageUrl" class="card-img-top img-fluid" style="height:300px;" alt="...">
+        <div class="p-4">
+            <h5 class="card-title">@p.Name</h5>
+            <p class="card-text">&euro; @p.Price</p>
+            <a href="/Products/Details?id=@p.Id" class="btn btn-primary btn-block">View Specification</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a href="/Products/Delete?id=@p.Id" class="btn btn-danger btn-block">Delete</a>
+            }
+
+            <a class="btn btn-success btn-block">Add to Cart</a>
+        </div>
+    </div>
+}
