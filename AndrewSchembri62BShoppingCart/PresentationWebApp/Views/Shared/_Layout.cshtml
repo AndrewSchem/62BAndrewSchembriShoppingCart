@@ -32,7 +32,7 @@
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link" asp-area="" asp-controller="Carts" asp-action="Index"><i class="fas fa-shopping-cart"></i> Cart</a>
+							<a class="nav-link" asp-controller="Carts" asp-action="Index" asp-route-email="@User.Identity.Name"><i class="fas fa-shopping-cart"></i> Cart</a>
 						</li>
 					</ul>
                 </div>

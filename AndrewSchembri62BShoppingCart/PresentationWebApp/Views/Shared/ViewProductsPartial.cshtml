@@ -15,7 +15,17 @@
 
 		@if (User.IsInRole("User") || User.IsInRole("Admin"))
 		{
-			<a href="/Products/AddToCart?id=@p.Id" class="btn btn-success btn-block">Add to Cart</a>
+			<br/>
+			<form method="get" asp-controller="Products" asp-action="AddToCart" class="row w-100 mx-auto">
+				<div class="col-6">
+					<input type="hidden" name="id" value="@p.Id"/>
+					<input type="number" name="quantity" class="form-control h-100" value="1" min="1"/>
+				</div>
+
+				<div class="col-6">
+					<button type="submit" class="btn btn-success btn-block">Add to Cart</button>
+				</div>
+			</form>
 		}
 	</div>
 </div>}

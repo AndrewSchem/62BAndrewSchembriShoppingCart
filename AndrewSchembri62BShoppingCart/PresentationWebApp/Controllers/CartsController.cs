@@ -15,7 +15,7 @@ namespace PresentationWebApp.Controllers
         private readonly IProductsService _productsService;
         private IWebHostEnvironment _env;
 
-        public CartsController(IProductsService productsService, ICategoriesService categoriesService,ICartsService cartsService, IWebHostEnvironment env)
+        public CartsController(IProductsService productsService,ICartsService cartsService, IWebHostEnvironment env)
         {
             _productsService = productsService;
             _cartsService = cartsService;
@@ -24,12 +24,14 @@ namespace PresentationWebApp.Controllers
 
         [HttpGet]
         [Authorize(Roles = "User, Admin")]
-        public IActionResult Index()
+        public IActionResult Index(string email)
         {
-            var list = _cartsService.GetCarts("andrewschembri1@hotmail.com");
+            var list = _cartsService.GetCarts(email);
             return View(list);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Delete(int id)
         {
             try
@@ -42,7 +44,7 @@ namespace PresentationWebApp.Controllers
                 TempData["warning"] = "Product was not deleted"; //Change from ViewData to TempData
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { email = User.Identity.Name });
         }
     }
 }

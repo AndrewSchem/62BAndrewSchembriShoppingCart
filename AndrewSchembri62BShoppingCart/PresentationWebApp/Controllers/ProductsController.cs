@@ -101,6 +101,7 @@ namespace PresentationWebApp.Controllers
         
         } //fiddler, burp, zap, postman
 
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult Delete(Guid id)
         {
@@ -119,15 +120,19 @@ namespace PresentationWebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         [Authorize(Roles = "User, Admin")]
-        public IActionResult AddToCart(Guid id)
+        public IActionResult AddToCart(Guid id, int quantity)
         //public IActionResult AddToCart(Guid id, string email)
         {
             try
             {
-                if (id != null)
-                {
-                    _cartsService.AddToCart(_productsService.GetProduct(id), 1, "andrewschembri1@hotmail.com");
+                if (id != null && quantity > 0) {
+                        _cartsService.AddToCart(_productsService.GetProduct(id), quantity, User.Identity.Name);
+				}else
+				{
+                    TempData["warning"] = "Product was not added! (ID or Quantity Error)";
+
                 }
 
                 TempData["feedback"] = "Product was added successfully";
@@ -135,7 +140,7 @@ namespace PresentationWebApp.Controllers
             catch (Exception ex)
             {
                 //log error
-                TempData["warning"] = "Product was not added!" + ex;
+                TempData["warning"] = "Product was not added! ";
             }
 
             return RedirectToAction("Index");

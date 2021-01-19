@@ -16,6 +16,30 @@ namespace ShoppingCart.Data.Repositories
 			_context = context;
 		}
 
+		public IQueryable<Cart> GetCarts()
+		{
+			return _context.Carts;
+		}
+
+		public IQueryable<Cart> GetCarts(string email)
+		{
+			var carts = _context.Carts.Where(x => x.Email.Contains(email));
+			return carts;
+		}
+
+		public Cart GetCart(int id)
+		{
+			return _context.Carts.SingleOrDefault(x => x.Id == id);
+		}
+
+		public int EditCart(Cart c)
+		{
+			Cart toChange = _context.Carts.Single(x => x.Id == c.Id);
+			toChange.Quantity = 10;
+			_context.SaveChanges();
+			return c.Id;
+		}
+
 		public int AddToCart(Cart c)
 		{
 			_context.Carts.Add(c);
@@ -27,20 +51,6 @@ namespace ShoppingCart.Data.Repositories
 		{
 			_context.Carts.Remove(c);
 			_context.SaveChanges();
-		}
-
-		public IQueryable<Cart> GetCarts()
-		{
-			return _context.Carts;
-		}
-
-		public Cart GetCart(int id)
-		{
-			return _context.Carts.SingleOrDefault(x => x.Id == id);
-		}
-		Guid ICartsRepository.AddToCart(Cart c)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

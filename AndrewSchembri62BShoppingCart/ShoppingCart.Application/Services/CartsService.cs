@@ -30,11 +30,39 @@ namespace ShoppingCart.Application.Services
 
 		public void AddToCart(ProductViewModel product, int quantity, string email)
 		{
+			var carts = GetCarts(email);
+			int found = 0;
+			int cartId;
 			Cart myCart = new Cart();
+			Cart toDelete = new Cart();
 			var myProduct = _mapper.Map<Product>(product);
-			myCart.Product = myProduct;
-			myCart.Quantity = quantity;
+
+			foreach (var cart in carts)
+			{
+				if (cart.Product.Id == myProduct.Id)
+				{
+					cartId = cart.Id;
+					found = 1;
+
+					toDelete = _cartsRepo.GetCart(cart.Id);
+					myCart.Quantity = cart.Quantity;
+					break;
+				}
+			}
+
+			myCart.ProductId = myProduct.Id;
+			myCart.Product = null;
 			myCart.Email = email;
+
+			if (found == 1)
+			{
+				_cartsRepo.DeleteFromCart(toDelete);
+				myCart.Quantity = myCart.Quantity + quantity;
+			}
+			else
+			{
+				myCart.Quantity = quantity;
+			}
 
 			_cartsRepo.AddToCart(myCart);
 		}
@@ -65,7 +93,7 @@ namespace ShoppingCart.Application.Services
 
 		public IQueryable<CartViewModel> GetCarts(string email)
 		{
-			var cart = _cartsRepo.GetCarts().Where(x => x.Email.Contains(email)).ProjectTo<CartViewModel>(_mapper.ConfigurationProvider);
+			var cart = _cartsRepo.GetCarts(email).ProjectTo<CartViewModel>(_mapper.ConfigurationProvider);
 			return cart;
 		}
 
