@@ -1,14 +1,21 @@
 ﻿@model IEnumerable<ShoppingCart.Application.ViewModels.CartViewModel>
 
-@foreach (var c in Model)
+@if (Model.Count() > 0)
 {
-<div class="card card- bg-dark text-light h-50">
-	<img src="@c.Product.ImageUrl" class="card-img-top img-fluid" style="height:300px;" alt="...">
-	<div class="p-4">
-		<p class="text-truncate">User: @c.Email</p>
-		<p>Product: @c.Product.Name</p>
-		<p>Quantity: @c.Quantity</p>
-		<a href="/Carts/Delete?id=@c.Id" class="btn btn-danger btn-block">Delete</a>
+	@foreach (var c in Model)
+	{
+	<div class="card card- bg-dark text-light h-50">
+		<img src="@c.Product.ImageUrl" class="card-img-top img-fluid" style="height:300px;" alt="...">
+		<div class="p-4">
+			<p class="text-truncate">User: @c.Email</p>
+			<p>Product: @c.Product.Name</p>
+			<p>Quantity: @c.Quantity</p>
+			<a href="/Carts/Delete?id=@c.Id" class="btn btn-danger btn-block">Delete</a>
+		</div>
 	</div>
-</div>
+	}
+}
+else
+{
+	<div class="alert alert-danger mx-auto my-4 w-75">Empty Cart</div>
 }

@@ -1,23 +1,43 @@
-﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
 
+@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
 
-@{
-    ViewData["Title"] = "Products";
-}
+@{ ViewData["Title"] = "Products"; }
 
 <h1>Products Catalogue</h1>
 
 <div class="container">
 
-    @Html.Partial("SearchPartial")
+	@Html.Partial("SearchPartial")
 
 </div>
 
 <div class="container">
-    <div class="row justify-content-between w-100">
-        @Html.Partial("ViewProductsPartial", Model)
-    </div>
+	<div class="row justify-content-between w-100">
+		@Html.Partial("ViewProductsPartial", Model)
+	</div>
 </div>
+<br />
+<br />
 
- 
+<!--https://www.youtube.com/watch?v=vnxN_zBisIo-->
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+
+	new X.PagedList.Mvc.Common.PagedListRenderOptions
+	{
+		DisplayItemSliceAndTotal = true,
+		ContainerDivClasses = new[] { "navigation" },
+		LiElementClasses = new[] { "page-item" },
+		PageClasses = new[] { "page-link" }
+	})
+
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+			$('ul.pagination > li.disabled > a').addClass('page-link');
+		});
+	</script>
+}
+
 

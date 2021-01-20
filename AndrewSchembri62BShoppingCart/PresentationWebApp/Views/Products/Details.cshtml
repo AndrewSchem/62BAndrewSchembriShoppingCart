@@ -1,48 +1,38 @@
 ﻿@model ShoppingCart.Application.ViewModels.ProductViewModel
 
 @{
-    ViewData["Title"] = "Details";
+	ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>ProductViewModel</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
+    <dl class="row mx-auto">
+        <div class="jumbotron mx-auto">
+            <!--<dt class = "col-sm-2">
+                Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class = "col-sm-10">
+                Html.DisplayFor(model => model.Id)
+            </dd>-->
+
+			<b>@Html.DisplayNameFor(model => model.Name):</b>
+			@Html.DisplayFor(model => model.Name)<br/>
+
+			<b>@Html.DisplayNameFor(model => model.Price):</b>
+			&euro;@Html.DisplayFor(model => model.Price)<br/>
+
+            <b>@Html.DisplayNameFor(model => model.Description):</b>
+            @Html.DisplayFor(model => model.Description)<br/><br/><br/>
+
+
+            @{ 
+            <img src="@Model.ImageUrl" width="400"/>
+            }
+        </div>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>

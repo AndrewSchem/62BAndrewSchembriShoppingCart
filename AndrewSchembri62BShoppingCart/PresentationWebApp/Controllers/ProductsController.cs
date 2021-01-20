@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
+using X.PagedList;
 
 namespace PresentationWebApp.Controllers
 {
@@ -26,10 +27,14 @@ namespace PresentationWebApp.Controllers
             _env = env;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
+            var pageNumber = page ?? 1;
             var list = _productsService.GetProducts();
-            return View(list);
+            int pageSize = 10;
+            var onePageOfProducts = list.ToPagedList(pageNumber, pageSize);
+            //return View(list);
+            return View(onePageOfProducts);
         }
 
         [HttpPost]
