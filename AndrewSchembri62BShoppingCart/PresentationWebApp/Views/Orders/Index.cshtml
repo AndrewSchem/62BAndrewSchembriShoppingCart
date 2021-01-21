@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ShoppingCart.Application.ViewModels.OrderDetailsViewModel>
+
+@{
+	ViewData["Title"] = "Orders Page";
+}
+
+<h1>Orders</h1>
+
+<div class="container">
+	@Html.Partial("ViewOrdersPartial", Model)
+</div>

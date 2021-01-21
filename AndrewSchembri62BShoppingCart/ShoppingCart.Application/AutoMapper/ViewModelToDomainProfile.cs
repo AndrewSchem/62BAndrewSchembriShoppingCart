@@ -16,6 +16,8 @@ namespace ShoppingCart.Application.AutoMapper
         public ViewModelToDomainProfile()
         {
             CreateMap<ProductViewModel, Product>();//.ForMember(x=>x.Category, opt=> opt.Ignore());
+            CreateMap<OrderViewModel, Order>();
+            CreateMap<OrderDetailsViewModel, OrderDetails>();
             CreateMap<CartViewModel,Cart>();
             CreateMap<CategoryViewModel, Category>();
             CreateMap<MemberViewModel, Member>();

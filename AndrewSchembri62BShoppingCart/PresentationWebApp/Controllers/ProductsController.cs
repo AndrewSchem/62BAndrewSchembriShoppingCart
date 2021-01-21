@@ -33,23 +33,42 @@ namespace PresentationWebApp.Controllers
             var list = _productsService.GetProducts();
             int pageSize = 10;
             var onePageOfProducts = list.ToPagedList(pageNumber, pageSize);
-            //return View(list);
+
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
+
             return View(onePageOfProducts);
         }
 
         [HttpPost]
-        public IActionResult Search(string keyword) //using a form, and the select list must have name attribute = category
+        public IActionResult Search(string keyword, int? page) //using a form, and the select list must have name attribute = category
         {
+            var pageNumber = page ?? 1;
             var list = _productsService.GetProducts(keyword).ToList();
 
-            return View("Index", list);
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
+
+            return View("Index", list.ToPagedList(pageNumber, 10));
+        }
+
+        [HttpPost]
+        public IActionResult SearchCategory(int category, int? page) //using a form, and the select list must have name attribute = category
+        {
+            var pageNumber = page ?? 1;
+            var list = _productsService.GetProducts(category).ToList();
+
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
+
+            return View("Index", list.ToPagedList(pageNumber, 10));
         }
 
 
         public IActionResult Details(Guid id)
         {
             var p = _productsService.GetProduct(id);
-            return View( p);
+            return View(p);
         }
 
         //the engine will load a page with empty fields
@@ -75,24 +94,39 @@ namespace PresentationWebApp.Controllers
             {
                 if(f !=  null)
                 {
-                    if(f.Length > 0)
+                    if(f.FileName.Length > 0)
                     {
-                        //C:\Users\Ryan\source\repos\SWD62BEP\SWD62BEP\Solution3\PresentationWebApp\wwwroot
-                        string newFilename = Guid.NewGuid() + System.IO.Path.GetExtension(f.FileName);
-                        string newFilenameWithAbsolutePath = _env.WebRootPath +  @"\Images\" + newFilename;
-                        
-                        using (var stream = System.IO.File.Create(newFilenameWithAbsolutePath))
-                        {
-                            f.CopyTo(stream);
-                        }
+                        if (data.Stock > 0) {
+                            //C:\Users\Ryan\source\repos\SWD62BEP\SWD62BEP\Solution3\PresentationWebApp\wwwroot
+                            string newFilename = Guid.NewGuid() + System.IO.Path.GetExtension(f.FileName);
+                            string newFilenameWithAbsolutePath = _env.WebRootPath + @"\Images\" + newFilename;
 
-                        data.ImageUrl = @"\Images\" + newFilename;
+                            using (var stream = System.IO.File.Create(newFilenameWithAbsolutePath))
+                            {
+                                f.CopyTo(stream);
+                            }
+
+                            data.ImageUrl = @"\Images\" + newFilename;
+
+                            _productsService.AddProduct(data);
+
+                            TempData["feedback"] = "Product was added successfully";
+						}
+						else{
+                            TempData["warning"] = "Product Stock Cannot Be Less Than 1!";
+                        }
+					}
+					else
+					{
+                        TempData["warning"] = "Product add an Image!";
                     }
+				}
+				else
+				{
+                    TempData["warning"] = "Product add an Image!";
                 }
 
-                _productsService.AddProduct(data);
 
-                TempData["feedback"] = "Product was added successfully";
             }
             catch (Exception ex)
             {
@@ -117,9 +151,39 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
-                //log your error 
+                TempData["warning"] = "Product was not deleted";
+            }
 
-                TempData["warning"] = "Product was not deleted"; //Change from ViewData to TempData
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Hide(Guid id)
+		{
+            try
+            {
+                _productsService.HideProduct(id);
+                TempData["feedback"] = "Product is Now Hidden!";
+            }
+            catch (Exception ex)
+            {
+                TempData["warning"] = "Product is Not Hidden!";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Show(Guid id)
+        {
+            try
+            {
+                _productsService.ShowProduct(id);
+                TempData["feedback"] = "Product is Now Shown!";
+            }
+            catch (Exception ex)
+            {
+                TempData["warning"] = "Product is Not Shown!";
             }
 
             return RedirectToAction("Index");
@@ -144,7 +208,6 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
-                //log error
                 TempData["warning"] = "Product was not added! ";
             }
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ShoppingCart.Data.Migrations
+namespace PresentationWebApp.Migrations
 {
-    public partial class AddCartFix : Migration
+    public partial class StockDisableProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -10,8 +10,8 @@ using PresentationWebApp.Data;
 namespace PresentationWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210118143110_IntialMigration")]
-    partial class IntialMigration
+    [Migration("20210121165503_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

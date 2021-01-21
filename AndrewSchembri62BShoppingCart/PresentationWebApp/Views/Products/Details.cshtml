@@ -6,33 +6,42 @@
 
 <h1>Details</h1>
 
-<div>
-    <hr />
-    <dl class="row mx-auto">
-        <div class="jumbotron mx-auto">
-            <!--<dt class = "col-sm-2">
-                Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd class = "col-sm-10">
-                Html.DisplayFor(model => model.Id)
-            </dd>-->
+@if (@Model.Disable == false || User.IsInRole("Admin")) {
+    <div>
+        <hr />
+        <dl class="row mx-auto">
+            <div class="jumbotron mx-auto">
+                <!--<dt class = "col-sm-2">
+                    Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class = "col-sm-10">
+                    Html.DisplayFor(model => model.Id)
+                </dd>-->
 
-			<b>@Html.DisplayNameFor(model => model.Name):</b>
-			@Html.DisplayFor(model => model.Name)<br/>
+			    <b>@Html.DisplayNameFor(model => model.Name):</b>
+			    @Html.DisplayFor(model => model.Name)<br/>
 
-			<b>@Html.DisplayNameFor(model => model.Price):</b>
-			&euro;@Html.DisplayFor(model => model.Price)<br/>
+			    <b>@Html.DisplayNameFor(model => model.Price):</b>
+			    &euro;@Html.DisplayFor(model => model.Price)<br/>
 
-            <b>@Html.DisplayNameFor(model => model.Description):</b>
-            @Html.DisplayFor(model => model.Description)<br/><br/><br/>
+                <b>@Html.DisplayNameFor(model => model.Stock):</b>
+			    @Html.DisplayFor(model => model.Stock)<br/>
+
+                <b>@Html.DisplayNameFor(model => model.Description):</b>
+                @Html.DisplayFor(model => model.Description)<br/><br/><br/>
 
 
-            @{ 
-            <img src="@Model.ImageUrl" width="400"/>
-            }
-        </div>
-    </dl>
-</div>
+                @{ 
+                <img src="@Model.ImageUrl" width="400"/>
+                }
+            </div>
+        </dl>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger mx-auto">Cannot View Product!</div>
+}
 <div>
     <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>

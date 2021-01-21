@@ -31,12 +31,13 @@ namespace ShoppingCart.Domain.Models
         [ForeignKey("Category")]
         public int CategoryId { get; set; } //this is the actual foreign key; this is a way how to address the relationship
 
-
+        [Required]
         public string ImageUrl { get; set; }
 
+        [Required]
         public int Stock { get; set; }
 
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         public bool Disable { get; set; } //to refresh the db,you must always run Add-Migration & Update-Database
 
     }

@@ -91,15 +91,10 @@ namespace ShoppingCart.Application.Services
 			return result;
 		}
 
-		public IQueryable<CartViewModel> GetCarts(string email)
+		public IList<CartViewModel> GetCarts(string email)
 		{
 			var cart = _cartsRepo.GetCarts(email).ProjectTo<CartViewModel>(_mapper.ConfigurationProvider);
-			return cart;
-		}
-
-		public CartViewModel GetProduct(Guid id)
-		{
-			throw new NotImplementedException();
+			return cart.ToList();
 		}
 
 	}

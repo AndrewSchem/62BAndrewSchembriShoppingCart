@@ -9,22 +9,25 @@ namespace ShoppingCart.Domain.Models
     public class OrderDetails
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public Guid ProductFK { get; set; }
 
         public virtual Product Product { get; set; }
 
+        [ForeignKey("Product")]
+        public Guid ProductId { get; set; }
 
-        public Guid OrderFK { get; set; }
+
         public virtual Order Order { get; set; }
 
+        [ForeignKey("Order")]
+        public int OrderId { get; set; }
 
+        [Required]
         public int Quantity { get; set; }
 
+        [Required]
         public double Price { get; set; }
-
 
     }
 }

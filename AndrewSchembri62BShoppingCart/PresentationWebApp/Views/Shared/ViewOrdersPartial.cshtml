@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ShoppingCart.Application.ViewModels.OrderDetailsViewModel> 
+<!-- ORDERS -->
+
+@if (Model.Count() > 0)
+{
+	@foreach (var o in Model)
+	{
+		<div class="bg-dark mt-4 mb-4 rounded">
+			<div class="row w-100">
+				<div class="jumbotron w-100">
+					<div class="row">
+						<div class="col">
+							<p><b>User:</b> @o.Order.UserEmail</p>
+							<p><b>Product:</b> @o.Product.Name</p>
+							<p><b>Quantity:</b> @o.Quantity</p>
+							<p><b>Price:</b> &euro;@o.Price</p>
+						</div>
+						<div class="col">
+							<img src="@o.Product.ImageUrl" class="float-right" width="200">
+						</div>
+					</div>
+
+					<div class="row">
+						<a class="btn btn-warning float-right mx-2">ID: @o.Order.Id</a>
+						<a class="btn btn-primary float-right text-light mx-2">Date: @o.Order.DatePlaced</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="alert alert-danger mx-auto my-4 w-75">No Orders</div>
+}

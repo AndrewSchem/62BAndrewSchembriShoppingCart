@@ -2,7 +2,7 @@
 
 namespace ShoppingCart.Data.Migrations
 {
-    public partial class CartMigration : Migration
+    public partial class StockDisableProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

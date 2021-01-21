@@ -34,6 +34,10 @@
 						<li class="nav-item">
 							<a class="nav-link" asp-controller="Carts" asp-action="Index" asp-route-email="@User.Identity.Name"><i class="fas fa-shopping-cart"></i> Cart</a>
 						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" asp-controller="Orders" asp-action="Index" asp-route-email="@User.Identity.Name"><i class="fas fa-list"></i> Orders</a>
+						</li>
 					</ul>
                 </div>
             </div>

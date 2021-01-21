@@ -10,8 +10,8 @@ using PresentationWebApp.Data;
 namespace PresentationWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210118183853_CartMigration")]
-    partial class CartMigration
+    [Migration("20210121230121_StockDisableProduct")]
+    partial class StockDisableProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

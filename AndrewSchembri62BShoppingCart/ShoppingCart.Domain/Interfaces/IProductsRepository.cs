@@ -12,10 +12,14 @@ namespace ShoppingCart.Domain.Interfaces
         IQueryable<Product> GetProducts();
         Product GetProduct(Guid id);
 
+        void DisableProduct(Guid id);
+
+        void ShowProduct(Guid id);
+
         void DeleteProduct(Product p);
 
         Guid AddProduct(Product p);
 
-
+        void DecreaseStock(Product p, int quantity);
     }
 }

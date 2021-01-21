@@ -41,6 +41,13 @@ namespace ShoppingCart.Data.Repositories
             _context.SaveChanges();
         }
 
+        public void ShowProduct(Guid id)
+        {
+            var p = GetProduct(id);
+            p.Disable = false;
+            _context.SaveChanges();
+        }
+
 
         public Product GetProduct(Guid id)
         {
@@ -54,5 +61,12 @@ namespace ShoppingCart.Data.Repositories
             //ShoppingCartDbContext context = new ShoppingCartDbContext();
             return _context.Products;
         }
+
+        public void DecreaseStock(Product p, int quantity)
+		{
+            var prod = GetProduct(p.Id);
+            prod.Stock = prod.Stock - quantity;
+            _context.SaveChanges();
+		}
     }
 }

@@ -18,7 +18,8 @@ namespace ShoppingCart.Application.AutoMapper
             //informing the automapper library that we are mapping /linking Product onto ProductViewModel
             CreateMap<Cart, CartViewModel>();
             CreateMap<Category, CategoryViewModel>();
-
+            CreateMap<Order, OrderViewModel>();
+            CreateMap<OrderDetails, OrderDetailsViewModel>();
             CreateMap<Member, MemberViewModel>();
 
         }

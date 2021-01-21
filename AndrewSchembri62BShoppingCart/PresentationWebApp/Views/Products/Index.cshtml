@@ -8,9 +8,20 @@
 <h1>Products Catalogue</h1>
 
 <div class="container">
+	<div class="row w-100">
+		@Html.Partial("SearchPartial")
 
-	@Html.Partial("SearchPartial")
 
+		<form class="col form-inline my-4 form-group" method="post" action="/Products/SearchCategory">
+			<select name="category" class="custom-select w-50">
+				@foreach (var c in ViewBag.Categories)
+				{
+					<option value="@c.Id">@c.Name</option>
+				}
+			</select>
+			<button type="submit" class="btn btn-primary w-50">Search Category</button>
+		</form>
+	</div>
 </div>
 
 <div class="container">

@@ -18,8 +18,11 @@ namespace ShoppingCart.Application.Interfaces
 
         void AddProduct(ProductViewModel product);
 
+        void DecreaseStock(ProductViewModel product, int quantity);
         void DeleteProduct(Guid id);
 
-        
+        void HideProduct(Guid id);
+
+        void ShowProduct(Guid id);
     }
 }

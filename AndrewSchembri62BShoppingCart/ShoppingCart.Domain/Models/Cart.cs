@@ -9,17 +9,18 @@ namespace ShoppingCart.Domain.Models
 	public class Cart
 	{
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
         public string Email { get; set; }
 
+        [Required]
         public virtual Product Product{ get; set; }
 
         [ForeignKey("Product")]
         public Guid ProductId { get; set; }
 
+        [Required]
         public int Quantity { get; set; }
     }
 }
