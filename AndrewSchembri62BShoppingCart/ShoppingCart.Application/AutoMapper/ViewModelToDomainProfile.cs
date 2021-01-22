@@ -8,14 +8,12 @@ using System.Text;
 namespace ShoppingCart.Application.AutoMapper
 {
 
-    //convert
-    //Domain (classes) >>>>>> Application (view models)
-
     public class ViewModelToDomainProfile: Profile
     {
         public ViewModelToDomainProfile()
         {
-            CreateMap<ProductViewModel, Product>();//.ForMember(x=>x.Category, opt=> opt.Ignore());
+            //When changing from ProductViewModel to Product
+            CreateMap<ProductViewModel, Product>();
             CreateMap<OrderViewModel, Order>();
             CreateMap<OrderDetailsViewModel, OrderDetails>();
             CreateMap<CartViewModel,Cart>();

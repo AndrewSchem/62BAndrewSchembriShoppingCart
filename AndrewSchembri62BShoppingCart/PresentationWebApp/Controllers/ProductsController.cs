@@ -27,24 +27,25 @@ namespace PresentationWebApp.Controllers
             _env = env;
         }
 
-        public IActionResult Index(int? page)
+        //https://www.youtube.com/watch?v=vnxN_zBisIo
+        public IActionResult Index(int? page) //Page Number
         {
-            var pageNumber = page ?? 1;
-            var list = _productsService.GetProducts();
-            int pageSize = 10;
-            var onePageOfProducts = list.ToPagedList(pageNumber, pageSize);
+            var pageNumber = page ?? 1; //If Page Number is Not Specified Page Number = 1
+            var list = _productsService.GetProducts(); //Get All Products
+            int pageSize = 10; //Specify Products Per Page
+            var onePageOfProducts = list.ToPagedList(pageNumber, pageSize); //Give X.PagedList Parameters
 
-            var listOfCategeories = _categoriesService.GetCategories();
-            ViewBag.Categories = listOfCategeories;
+            var listOfCategeories = _categoriesService.GetCategories(); //Categories For Filter
+            ViewBag.Categories = listOfCategeories; //Set All Categories
 
-            return View(onePageOfProducts);
+            return View(onePageOfProducts); //Send List of Products
         }
 
         [HttpPost]
-        public IActionResult Search(string keyword, int? page) //using a form, and the select list must have name attribute = category
+        public IActionResult Search(string keyword, int? page) //If Keyword Inserted
         {
             var pageNumber = page ?? 1;
-            var list = _productsService.GetProducts(keyword).ToList();
+            var list = _productsService.GetProducts(keyword).ToList(); //Get Products With Keyword
 
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
@@ -53,10 +54,10 @@ namespace PresentationWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchCategory(int category, int? page) //using a form, and the select list must have name attribute = category
+        public IActionResult SearchCategory(int category, int? page) //If Category Id inserted 
         {
             var pageNumber = page ?? 1;
-            var list = _productsService.GetProducts(category).ToList();
+            var list = _productsService.GetProducts(category).ToList(); //Get Products With Category
 
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
@@ -67,13 +68,12 @@ namespace PresentationWebApp.Controllers
 
         public IActionResult Details(Guid id)
         {
-            var p = _productsService.GetProduct(id);
+            var p = _productsService.GetProduct(id); //Get Details of Item
             return View(p);
         }
 
-        //the engine will load a page with empty fields
         [HttpGet]
-        [Authorize (Roles ="Admin")] //is going to be accessed only by authenticated users
+        [Authorize (Roles ="Admin")]
         public IActionResult Create()
         {
             //fetch a list of categories
@@ -97,7 +97,6 @@ namespace PresentationWebApp.Controllers
                     if(f.FileName.Length > 0)
                     {
                         if (data.Stock > 0) {
-                            //C:\Users\Ryan\source\repos\SWD62BEP\SWD62BEP\Solution3\PresentationWebApp\wwwroot
                             string newFilename = Guid.NewGuid() + System.IO.Path.GetExtension(f.FileName);
                             string newFilenameWithAbsolutePath = _env.WebRootPath + @"\Images\" + newFilename;
 
@@ -138,7 +137,7 @@ namespace PresentationWebApp.Controllers
            ViewBag.Categories = listOfCategeories;
             return View(data);
         
-        } //fiddler, burp, zap, postman
+        }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -146,7 +145,7 @@ namespace PresentationWebApp.Controllers
         {
             try
             {
-                _productsService.DeleteProduct(id);
+                _productsService.DeleteProduct(id); //Delete Product With Id
                 TempData["feedback"] = "Product was deleted";
             }
             catch (Exception ex)
@@ -163,7 +162,7 @@ namespace PresentationWebApp.Controllers
 		{
             try
             {
-                _productsService.HideProduct(id);
+                _productsService.HideProduct(id); //Hide Product With ID
                 TempData["feedback"] = "Product is Now Hidden!";
             }
             catch (Exception ex)
@@ -178,7 +177,7 @@ namespace PresentationWebApp.Controllers
         {
             try
             {
-                _productsService.ShowProduct(id);
+                _productsService.ShowProduct(id); //Show Product with ID
                 TempData["feedback"] = "Product is Now Shown!";
             }
             catch (Exception ex)
@@ -197,7 +196,7 @@ namespace PresentationWebApp.Controllers
             try
             {
                 if (id != null && quantity > 0) {
-                        _cartsService.AddToCart(_productsService.GetProduct(id), quantity, User.Identity.Name);
+                        _cartsService.AddToCart(_productsService.GetProduct(id), quantity, User.Identity.Name); //Add To Cart ProductID, with Quantity and Email
 				}else
 				{
                     TempData["warning"] = "Product was not added! (ID or Quantity Error)";

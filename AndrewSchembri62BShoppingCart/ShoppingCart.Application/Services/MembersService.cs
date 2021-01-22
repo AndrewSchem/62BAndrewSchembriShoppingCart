@@ -23,7 +23,7 @@ namespace ShoppingCart.Application.Services
             member.FirstName = m.FirstName;
             member.LastName = m.LastName;
 
-            _membersRepo.AddMember(member);
+            _membersRepo.AddMember(member); //Add a New Member
         }
     }
 }

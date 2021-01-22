@@ -2,7 +2,7 @@
 
 @foreach (var p in Model)
 {
-	if (p.Disable == false || User.IsInRole("Admin"))
+	if (p.Disable == false || User.IsInRole("Admin")) //If Product Is Not Disabled
 	{
 	<div class="card card- bg-dark text-light h-50">
 		<img src="@p.ImageUrl" class="card-img-top img-fluid" style="height:300px;" alt="...">

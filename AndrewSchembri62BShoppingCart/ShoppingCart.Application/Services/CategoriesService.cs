@@ -25,7 +25,7 @@ namespace ShoppingCart.Application.Services
                            Id = c.Id,
                            Name = c.Name
                        };
-            return list;
+            return list; //Return List of Categories
         }
     }
 }

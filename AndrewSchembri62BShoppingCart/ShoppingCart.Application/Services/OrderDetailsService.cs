@@ -28,26 +28,26 @@ namespace ShoppingCart.Application.Services
 			myOrder.ProductId = productId;
 			myOrder.Quantity = quantity;
 			myOrder.Price = price;
-			_orderDetailsRepo.AddOrderDetail(myOrder);
+			_orderDetailsRepo.AddOrderDetail(myOrder); //Add Order Detail using Var of OrderDetails
 		}
 
 		public void DeleteOrderDetail(OrderDetailsViewModel order)
 		{
 			var myOrder = _mapper.Map<OrderDetails>(order);
-			_orderDetailsRepo.DeleteOrderDetail(myOrder);
+			_orderDetailsRepo.DeleteOrderDetail(myOrder); //Delete Order by using OrderDetails
 		}
 
 		public OrderDetailsViewModel GetOrderDetail(int id)
 		{
 			var myOrder = _orderDetailsRepo.GetOrderDetail(id);
 			var result = _mapper.Map<OrderDetailsViewModel>(myOrder);
-			return result;
+			return result; //Return OrderDetails where id = id
 		}
 
 		public IQueryable<OrderDetailsViewModel> GetOrderDetails(string email)
 		{
 			var orders = _orderDetailsRepo.GetOrderDetails().Where(x => x.Order.UserEmail == email).ProjectTo<OrderDetailsViewModel>(_mapper.ConfigurationProvider);
-			return orders;
+			return orders; //Get OrderDetails Where OrderDetails.Order.UserEmail = email
 		}
 	}
 }

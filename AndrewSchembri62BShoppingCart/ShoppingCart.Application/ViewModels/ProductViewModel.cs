@@ -24,8 +24,6 @@ namespace ShoppingCart.Application.ViewModels
         public bool Disable { get; set; }
 
         public int Stock { get; set; }
-        //stock
-        //supplier
 
     }
 }

@@ -18,7 +18,7 @@ namespace ShoppingCart.Data.Repositories
 
         public void AddMember(Member m)
         {
-            _context.Members.Add(m);
+            _context.Members.Add(m); //Add Member
             _context.SaveChanges();
         }
     }

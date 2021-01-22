@@ -19,7 +19,7 @@ namespace ShoppingCart.Data.Repositories
         }
         public IQueryable<Category> GetCategories()
         {
-            return _context.Categories;
+            return _context.Categories; //Return All Categories
         }
     }
 }

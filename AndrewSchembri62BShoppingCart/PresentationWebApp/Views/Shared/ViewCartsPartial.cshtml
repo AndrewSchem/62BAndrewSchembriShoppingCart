@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ShoppingCart.Application.ViewModels.CartViewModel>
 
-@if (Model.Count() > 0)
-{
+@if (Model.Count() > 0) //If More than 0 Items in Cart
+{ 
 	@foreach (var c in Model)
 	{
 <div class="card card- bg-dark text-light h-50">
@@ -21,7 +21,7 @@
 </div>
 	}
 }
-else
+else //Else Show Empty Cart
 {
 	<div class="alert alert-danger mx-auto my-4 w-75">Empty Cart</div>
 }

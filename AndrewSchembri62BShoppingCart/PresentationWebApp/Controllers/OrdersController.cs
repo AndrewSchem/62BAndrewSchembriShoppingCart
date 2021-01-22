@@ -27,7 +27,7 @@ namespace PresentationWebApp.Controllers
 		[Authorize(Roles = "User, Admin")]
 		public IActionResult Index(string email)
 		{
-			var list = _orderDetailsService.GetOrderDetails(email);
+			var list = _orderDetailsService.GetOrderDetails(email); //Get All Orders From Email
 			return View(list);
 		}
 	}

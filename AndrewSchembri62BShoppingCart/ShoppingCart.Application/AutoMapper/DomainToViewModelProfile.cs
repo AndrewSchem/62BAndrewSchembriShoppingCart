@@ -9,13 +9,10 @@ namespace ShoppingCart.Application.AutoMapper
 {
     public class DomainToViewModelProfile: Profile
     {
-
-        //convert
-        //Application (view models) >> Domain (classes)
         public DomainToViewModelProfile()
         {
-            CreateMap<Product, ProductViewModel>(); //.ForMember(x=>x.DestColumn, opt=> opt.MapFrom(src=>src.SrcColumn)) ; 
-            //informing the automapper library that we are mapping /linking Product onto ProductViewModel
+            //When changing from Product to ProductViewModel
+            CreateMap<Product, ProductViewModel>();
             CreateMap<Cart, CartViewModel>();
             CreateMap<Category, CategoryViewModel>();
             CreateMap<Order, OrderViewModel>();

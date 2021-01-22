@@ -31,9 +31,9 @@ namespace PresentationWebApp.Controllers
         [Authorize(Roles = "User, Admin")]
         public IActionResult Index()
         {
-            string email = User.Identity.Name;
-            var list = _cartsService.GetCarts(email);
-            return View(list);
+            string email = User.Identity.Name; //User Email
+            var list = _cartsService.GetCarts(email); //Get From Cart
+            return View(list); //View User Cart
         }
 
         [HttpGet]
@@ -42,15 +42,15 @@ namespace PresentationWebApp.Controllers
         {
             try
             {
-                _cartsService.DeleteFromCart(id);
+                _cartsService.DeleteFromCart(id); //Delete Product From Cart
                 TempData["feedback"] = "Product was deleted";
             }
             catch (Exception ex)
             {
-                TempData["warning"] = "Product was not deleted"; //Change from ViewData to TempData
+                TempData["warning"] = "Product was not deleted";
             }
 
-            return RedirectToAction("Index", new { email = User.Identity.Name });
+            return RedirectToAction("Index", new { email = User.Identity.Name }); //Redircet with User Email
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -61,25 +61,25 @@ namespace PresentationWebApp.Controllers
                 string email = User.Identity.Name;
                 if (email != null)
                 {
-                    var CartToAdd = _cartsService.GetCarts(email);
-                    if (CartToAdd.Count > 0)
+                    var CartToAdd = _cartsService.GetCarts(email); //Get All From Cart
+                    if (CartToAdd.Count > 0) //If Cart Not Empty
                     {
                         var orderModel = new OrderViewModel();
-                        orderModel.DatePlaced = DateTime.Now;
-                        orderModel.UserEmail = User.Identity.Name;
-                        int orderId = _ordersService.AddOrder(orderModel);
+                        orderModel.DatePlaced = DateTime.Now; //Setting Order DateTime
+                        orderModel.UserEmail = User.Identity.Name; //Setting Order Email
+                        int orderId = _ordersService.AddOrder(orderModel); //Adding Order
 
-                        foreach (var c in CartToAdd)
+                        foreach (var c in CartToAdd) //Loop Every Item in Cart
                         {
-                            if (c.Product.Stock > 0 && c.Product.Stock >= c.Quantity) {
-                                double price = (c.Quantity * c.Product.Price);
-                                int quantity = c.Quantity;
-                                Guid productId = c.Product.Id;
+                            if (c.Product.Stock > 0 && c.Product.Stock >= c.Quantity) { //If Quantity Wanted is Greater than Stock Keep Item in Cart and Dont Create Order
+                                double price = (c.Quantity * c.Product.Price); //Setting Price is Product Price for Quantity
+                                int quantity = c.Quantity; // Setting Quantity
+                                Guid productId = c.Product.Id;  //Set Product Id
                                 
-                                _orderDetailsService.AddOrderDetail(orderId, productId, quantity, price);
-                                _cartsService.DeleteFromCart(c.Id);
+                                _orderDetailsService.AddOrderDetail(orderId, productId, quantity, price); //Add Order Detail
+                                _cartsService.DeleteFromCart(c.Id); //Delete Product From Cart
 
-                                _productsService.DecreaseStock(c.Product, c.Quantity);
+                                _productsService.DecreaseStock(c.Product, c.Quantity); //Decrease From Stock
                             }
                         }
 

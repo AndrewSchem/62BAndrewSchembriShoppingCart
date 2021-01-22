@@ -24,27 +24,27 @@ namespace ShoppingCart.Application.Services
 		public int AddOrder(OrderViewModel order)
 		{
 			var myOrder = _mapper.Map<Order>(order);
-			_ordersRepo.AddOrder(myOrder);
+			_ordersRepo.AddOrder(myOrder); //Add Order using OrderViewModel
 			return myOrder.Id;
 		}
 
 		public void DeleteOrder(OrderViewModel order)
 		{
 			var myOrder = _mapper.Map<Order>(order);
-			_ordersRepo.DeleteOrder(myOrder);
+			_ordersRepo.DeleteOrder(myOrder); //Delete Order using OrderViewModel
 		}
 
 		public IQueryable<OrderViewModel> GetOrders(string email)
 		{
 			var orders = _ordersRepo.GetOrders().Where(x => x.UserEmail.Contains(email)).ProjectTo<OrderViewModel>(_mapper.ConfigurationProvider);
-			return orders;
+			return orders; //Get all orders where email = email
 		}
 
 		public OrderViewModel GetOrder(int id)
 		{
 			var myOrder = _ordersRepo.GetOrder(id);
 			var result = _mapper.Map<OrderViewModel>(myOrder);
-			return result;
+			return result; //Get Order using Id
 		}
 	}
 }
