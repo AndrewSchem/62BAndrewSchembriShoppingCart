@@ -68,6 +68,7 @@ namespace PresentationWebApp.Controllers
                         orderModel.DatePlaced = DateTime.Now; //Setting Order DateTime
                         orderModel.UserEmail = User.Identity.Name; //Setting Order Email
                         int orderId = _ordersService.AddOrder(orderModel); //Adding Order
+                        string feedback = "Order Created";
 
                         foreach (var c in CartToAdd) //Loop Every Item in Cart
                         {
@@ -80,10 +81,14 @@ namespace PresentationWebApp.Controllers
                                 _cartsService.DeleteFromCart(c.Id); //Delete Product From Cart
 
                                 _productsService.DecreaseStock(c.Product, c.Quantity); //Decrease From Stock
-                            }
+							}
+							else
+							{
+                                feedback = "Order Created: Some Items Were Not Ordered";
+							}
                         }
 
-                        TempData["feedback"] = "Order Created";
+                        TempData["feedback"] = feedback;
                     }
                     else
                     {
