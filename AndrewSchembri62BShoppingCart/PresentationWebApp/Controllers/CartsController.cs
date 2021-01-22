@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using System;
@@ -16,14 +17,16 @@ namespace PresentationWebApp.Controllers
         private readonly IProductsService _productsService;
         private readonly IOrderDetailsService _orderDetailsService;
         private readonly IOrdersService _ordersService;
+        private readonly ILogger<CartsController> _logger;
         private IWebHostEnvironment _env;
 
-        public CartsController(IProductsService productsService, IOrdersService ordersService, IOrderDetailsService orderDetailsService,ICartsService cartsService, IWebHostEnvironment env)
+        public CartsController(IProductsService productsService, IOrdersService ordersService, IOrderDetailsService orderDetailsService, ILogger<CartsController> logger, ICartsService cartsService, IWebHostEnvironment env)
         {
             _orderDetailsService = orderDetailsService;
             _ordersService = ordersService;
             _productsService = productsService;
             _cartsService = cartsService;
+            _logger = logger;
             _env = env;
         }
 
@@ -47,6 +50,7 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("Product Was Not Deleted! " + ex);
                 TempData["warning"] = "Product was not deleted";
             }
 
@@ -101,6 +105,7 @@ namespace PresentationWebApp.Controllers
                 }
             }
             catch (Exception ex) {
+                _logger.LogError("Order Was Not Created! " + ex);
                 TempData["warning"] = "Order was Not Created" + ex;
             }
             return RedirectToAction("Index");

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using X.PagedList;
@@ -17,13 +18,15 @@ namespace PresentationWebApp.Controllers
         private readonly IProductsService _productsService;
         private readonly ICartsService _cartsService;
         private readonly ICategoriesService _categoriesService;
+        private readonly ILogger<ProductsController> _logger;
         private IWebHostEnvironment _env;
         public ProductsController(IProductsService productsService, ICategoriesService categoriesService,
-             ICartsService cartsService ,IWebHostEnvironment env )
+             ICartsService cartsService, ILogger<ProductsController> logger, IWebHostEnvironment env )
         {
             _productsService = productsService;
             _categoriesService = categoriesService;
             _cartsService = cartsService;
+            _logger = logger;
             _env = env;
         }
 
@@ -129,13 +132,13 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
-                //log error
+                _logger.LogError("Product Was Not Added! " + ex);
                 TempData["warning"] = "Product was not added!";
             }
 
            var listOfCategeories = _categoriesService.GetCategories();
            ViewBag.Categories = listOfCategeories;
-            return View(data);
+           return View(data);
         
         }
 
@@ -150,6 +153,7 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("Product Was Not Deleted! " + ex);
                 TempData["warning"] = "Product was not deleted";
             }
 
@@ -167,6 +171,7 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("Product Was Not Hidden! " + ex);
                 TempData["warning"] = "Product is Not Hidden!";
             }
 
@@ -182,6 +187,7 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("Product Was Not Shown! " + ex);
                 TempData["warning"] = "Product is Not Shown!";
             }
 
@@ -207,6 +213,7 @@ namespace PresentationWebApp.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError("Product Was Not Added! " + ex);
                 TempData["warning"] = "Product was not added! ";
             }
 
